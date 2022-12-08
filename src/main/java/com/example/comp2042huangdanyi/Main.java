@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.comp2042huangdanyi;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;

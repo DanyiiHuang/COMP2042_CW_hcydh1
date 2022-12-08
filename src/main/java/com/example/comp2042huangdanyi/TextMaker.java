@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.comp2042huangdanyi;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
