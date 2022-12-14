@@ -68,7 +68,7 @@ public class Cell {
 
     // push to view class
     void setColorByNumber(int number) {
-        View.setColorByNumber(number, rectangle, View.choice);
+      View.setColorByNumber(number, rectangle, View.choice);
 //        switch (number) {
 //            case 0:
 //                rectangle.setFill(Color.rgb(224, 226, 226, 0.5));
@@ -108,7 +108,7 @@ public class Cell {
 //
 //
 //        }
-    }
+   }
 
     double getX() {
         return rectangle.getX();

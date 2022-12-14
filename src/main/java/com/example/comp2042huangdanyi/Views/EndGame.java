@@ -1,5 +1,6 @@
 package com.example.comp2042huangdanyi.Views;
 
+import com.example.comp2042huangdanyi.data.Game;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 public class EndGame {
     private static EndGame singleInstance = null;
     public static Button quitButton;
+    public static Button quit = new Button("Exit Game");
+    public static Text scoreText = new Text();;
     private EndGame(){
 
     }
@@ -23,21 +26,46 @@ public class EndGame {
 
     public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
         Text text = new Text("GAME OVER");
-        text.relocate(250,250);
+        text.relocate(230,250);
         text.setFont(Font.font(80));
         root.getChildren().add(text);
-
-        Text scoreText = new Text(score+"");
+        //TODO old score  new Game.score
+        int score1 = Game.score;
+        scoreText.setText("Score:"+score);
         scoreText.setFill(Color.BLACK);
-        scoreText.relocate(250,600);
+        scoreText.relocate(270,350);
         scoreText.setFont(Font.font(80));
-        root.getChildren().add(scoreText);
+        try {
+            root.getChildren().add(scoreText);
+        }catch (Exception e){
 
-        quitButton = new Button("QUIT");
-        quitButton.setPrefSize(100,30);
-        quitButton.setTextFill(Color.PINK);
+        }
+        score = 0;
+        //TODO
+        Text keepText = new Text(" Please keep trying!");
+        keepText.setFill(Color.BLACK);
+        keepText.relocate(300,467);
+        keepText.setFont(Font.font(30));
+        root.getChildren().add(keepText);
+        //TODO
+        quitButton = new Button("Restart");
+        quitButton.setPrefSize(200,50);
+        quitButton.setTextFill(Color.BLACK);
         root.getChildren().add(quitButton);
-        quitButton.relocate(100,800);
+        quitButton.relocate(345,500);
+
+
+        quit.setPrefSize(200,50);
+        quit.setTextFill(Color.BLACK);
+        try {
+            root.getChildren().add(quit);
+        }catch (Exception e){
+
+        }
+        quit.relocate(345,600);
+
+
+
 //        quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 //            @Override
 //            public void handle(MouseEvent event) {

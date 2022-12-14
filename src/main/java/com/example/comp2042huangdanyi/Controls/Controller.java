@@ -3,6 +3,7 @@ package com.example.comp2042huangdanyi.Controls;
 
 import com.example.comp2042huangdanyi.Views.EndGame;
 import com.example.comp2042huangdanyi.Views.View;
+import com.example.comp2042huangdanyi.data.Game;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +21,8 @@ import java.util.Optional;
 // for all code handle inputs from user
 
 public class Controller {
+
+    Stage primaryStage;
 
     View view;
     // single design
@@ -48,7 +51,7 @@ public class Controller {
 //			System.out.println("choice" + "" + arg2.intValue());
                         if (arg0.getValue().equals(0))
                         {
-                            //no change: default
+                            View.setChoice(0);
                         }
                         else if (arg0.getValue().equals(1))
                         {
@@ -79,6 +82,7 @@ public class Controller {
 
     public void runGame(Stage primaryStage)
     {
+        this.primaryStage = primaryStage;
         view.readyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -104,6 +108,45 @@ public class Controller {
         });
 
 
+        view.exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.exit(0);
+            }
+        });
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                EndGame.quit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        System.exit(0);
+                    }
+                });
+
+
+                View.ab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                        //TODO 获取了difficult属性值
+                        //System.out.println(newValue);
+                        //TODO 根据难易程序对TIME进行设置 3分钟为容易程序，一分钟为困难程度
+                        if(newValue.equals("easy")){
+                            //容易程度
+                            Game.isEasy = 1;
+                            Game.TimeNum = 180;
+                        }else {
+                            //困难程度
+                            Game.isEasy = 0;
+                            Game.TimeNum = 60;
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
     public void gameOver(Group root)
@@ -112,13 +155,26 @@ public class Controller {
             @Override
             public void handle(MouseEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Quit Dialog");
-                alert.setHeaderText("Quit from this page");
+
+                alert.setTitle("Confirm Restart");
+                alert.setHeaderText("Restart");
                 alert.setContentText("Are you sure?");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
-                    root.getChildren().clear();
+
+                    //root.getChildren().clear();
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            //更新JavaFX的主线程的代码放在此处
+                            Game.score = 0;
+                            //EndGame.scoreText.setText("Score: ");
+                            view.game.game(view.getGameScene(), view.getGameRoot(), primaryStage, view.getEndGameScene(), view.getEndGameRoot());
+                            view.showScene(primaryStage, view.getGameScene());
+                        }
+                    });
                 }
             }
         });
