@@ -17,6 +17,7 @@ public class Main extends Application {
             Platform.exit();
         });
         primaryStage.setTitle("2048");
+        primaryStage.getIcons().add(new Image("File:src/main/resources/app_icon.png"));
         View.getSingleInstance().init(primaryStage);
         Controller.getSingleInstance().initColor();
         // added absolute path

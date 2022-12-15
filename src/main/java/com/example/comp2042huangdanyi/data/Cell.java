@@ -7,11 +7,6 @@ import javafx.scene.text.Text;
 
 import static com.example.comp2042huangdanyi.Views.View.choice;
 
-// ecap of methods : change to private
-// Rectangle
-
-// cell should has color scheme
-
 public class Cell {
     private Rectangle rectangle;
     private Group root;

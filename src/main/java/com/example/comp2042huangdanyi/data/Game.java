@@ -2,39 +2,22 @@ package com.example.comp2042huangdanyi.data;
 
 import com.example.comp2042huangdanyi.Controls.Controller;
 import com.example.comp2042huangdanyi.Views.EndGame;
+import com.example.comp2042huangdanyi.Views.View;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.util.Random;
-// games scene should have:
-// length per cell
-// how many cells alone one axis
-// total length
-// single instance DESIGN MODEL
-
-
-// 1)in game func:
-// score update change: adder
-// 2) if no move , no number will be generated,
-// modified is in use
-
-// 3) set modified " the merged cell"
-
-
-// ====================
-// duplciated GameScene
 
 public class Game  {
 
     public Game (){
         // Add a window listener to the stage
-
     }
     private static int HEIGHT = 700;
     private static int n = 4;
@@ -50,12 +33,9 @@ public class Game  {
     private Text leaderText;
     public static Text challengeText = new Text();
     public static Boolean isChallengeEasy = null;
-
     public static Integer highLeader = 0;
     public static volatile Integer TimeNum = null;
-    // set 1 as easy, 0 as difficult
-    public static Integer isEasy = null;
-
+    public static Integer isEasy = null; // set 1 as easy, 0 as difficult
 
     public Text getText() { return scoreText; }
     public int getScore() { return score; }
@@ -116,15 +96,14 @@ public class Game  {
         }
     }
 
-    // 0 means win
-    // 1 means has Empty cell
+    // If there is any empty cell then return 1 else return 0.
     private int  haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (cells[i][j].getNumber() == 0)
-                    return 1;
                 if(cells[i][j].getNumber() == 2048)
                     return 0;
+                if (cells[i][j].getNumber() == 0)
+                    return 1;
             }
         }
         return -1;
@@ -218,6 +197,9 @@ public class Game  {
         }
     }
 
+    /**
+     *
+     */
     private void moveUp() {
         for (int j = 0; j < n; j++) {
             for (int i = 1; i < n; i++) {
@@ -234,6 +216,9 @@ public class Game  {
 
     }
 
+    /**
+     *
+     */
     private void moveDown() {
         for (int j = 0; j < n; j++) {
             for (int i = n - 1; i >= 0; i--) {
@@ -254,7 +239,6 @@ public class Game  {
         // not modified: prevent merge 2 times
         // merge first and second cell
         // first cell should  equal to second , and they both be non zero
-
         if (des + sign < n && des + sign >= 0) {
             if (cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify()
                     && cells[i][des + sign].getNumber() != 0) {
@@ -271,7 +255,6 @@ public class Game  {
             // update scores
             score += cells[i][j].getNumber();
             score += cells[i][j].getNumber();
-
             cells[i][j].adder(cells[i][des + sign]);
             cells[i][des+sign].setModify(true); //should set the "merged cell"
 
@@ -296,7 +279,6 @@ public class Game  {
     // how to move
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
-
             // update scores
             score += cells[i][j].getNumber();
             score += cells[i][j].getNumber();
@@ -331,16 +313,6 @@ public class Game  {
         return true;
     }
 
-    // this is wrong , score is sum of merged values
-
-//    private void sumCellNumbersToScore() {
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < n; j++) {
-//                score += cells[i][j].getNumber();
-//            }
-//        }
-//    }
-
     public void move(KeyEvent key)
     {
         if (key.getCode() == KeyCode.DOWN) {
@@ -352,32 +324,32 @@ public class Game  {
         } else if (key.getCode() == KeyCode.RIGHT) {
             moveRight();
         }
-
     }
     public void setScore()
     {
         scoreText.setText(score + "");
-
     }
     public void fillNewNumberOrEnd(Stage primaryStage, Scene endGameScene, Group endGameRoot)
     {
-
-
         int haveEmptyCell;
         haveEmptyCell = Game.this.haveEmptyCell();
 
         // check the result in each step
         if (haveEmptyCell == -1) {
             if (canNotMove()) {
+                if (View.choice == 0){
+                    endGameScene.setFill((Color.rgb(168, 149, 135, 1.0)));
+                }else{
+                    endGameScene.setFill(Color.rgb(255, 158, 12, 1.0));
+                }
 
                 primaryStage.setScene(endGameScene);
-
                 EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
                 Controller.getSingleInstance().gameOver(endGameRoot);
                 root.getChildren().clear();
                 if(Game.isChallengeEasy == null){
-                    //说明是普通模式，然后才进行设置排行榜
-                    //change HIGN
+                    //state: common mode, then set leaderboard
+                    //change HIGH
                     if(highLeader < score){
                         highLeader = score;
                     }
@@ -392,7 +364,13 @@ public class Game  {
         moveFlag = false;
     }
 
-
+    /**
+     * @param gameScene
+     * @param root
+     * @param primaryStage
+     * @param endGameScene
+     * @param endGameRoot
+     */
     // game main: duplicated variables
     public void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
 
@@ -419,9 +397,9 @@ public class Game  {
         scoreText.setText(score + "");
 
         if(challengeText.getText().equals("common")){
-            //at time time is common mode，no timer。need to move the text upward and hide level of difficulty
+            //at this time is common mode，no timer。need to move the text upward and hide level of difficulty
 
-            //set yexy of leaderboard
+            //set text of leaderboard
             Text leader = new Text();
             root.getChildren().add(leader);
             leader.setText("HIGH:");
@@ -433,7 +411,6 @@ public class Game  {
             leaderText.setFont(Font.font(20));
             //st HIGH
             leaderText.setText(Game.highLeader + "");
-
 
             // set text of level of difficulty
             Text challenge = new Text();
@@ -448,7 +425,6 @@ public class Game  {
             //set HIGH
             Boolean isChallengeEasy = Game.isChallengeEasy;
 
-
         }else if(challengeText.getText().equals("challenge")){
             //challenge mode
             Text time = new Text();
@@ -462,32 +438,6 @@ public class Game  {
             scoreTime.setFont(Font.font(20));
             scoreTime.setText( Game.TimeNum+ "");
 
-            /**
-             * if(Game.isEasy != null && Game.isEasy == 1){
-             *                 TimeNum = 180;
-             *                 scoreTime.setText(TimeNum +"");
-             *             }else if (Game.isEasy != null && Game.isEasy == 0){
-             *                 TimeNum = 60;
-             *                 scoreTime.setText(TimeNum +"");
-             *             }
-             */
-            /**
-             *             //set text of leaderboard
-             *             Text leader = new Text();
-             *             root.getChildren().add(leader);
-             *             leader.setText("HIGH:");
-             *             leader.setFont(Font.font(30));
-             *             leader.relocate(750,400);
-             *             leaderText = new Text();
-             *             root.getChildren().add(leaderText);
-             *             leaderText.relocate(750,450);
-             *             leaderText.setFont(Font.font(20));
-             *             //设置HIGH
-             *             leaderText.setText(highLeader + "");
-             */
-
-
-
             //set text of difficulty
             Text challenge = new Text();
             root.getChildren().add(challenge);
@@ -500,30 +450,15 @@ public class Game  {
             challengeText.setFont(Font.font(20));
             //set HIGH
             Boolean isChallengeEasy = Game.isChallengeEasy;
-
         }
 
-
-
-
-
-
         new Thread(()->{
-
-            /**
-             *              if(Game.isEasy != null && Game.isEasy == 1){
-             *                     Game.TimeNum = 180;
-             *                 }else if(Game.isEasy != null && Game.isEasy == 0){
-             *                     Game.TimeNum = 60;
-             *                 }
-             */
 
             synchronized (this){
                 while(true){
                     if(Game.isChallengeEasy == null || Game.isEasy == null || Game.TimeNum == null){
                         //now common mode, no timer,break directly
                         //break;
-
                     }else {
                         try {
                             Thread.sleep(1000);
@@ -544,15 +479,12 @@ public class Game  {
                                 e.printStackTrace();
                             }
                             scoreTime.setText(String.valueOf(Game.TimeNum));
-
                             break;
                         }
                     }
                 }
             }
 
-            //clear TimeNum
-            //Game.TimeNum = 0;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -571,9 +503,6 @@ public class Game  {
                     score = 0;
                 }
             });
-
-
-
         }).start();
 
         randomFillNumber(1);
@@ -582,12 +511,9 @@ public class Game  {
 
         gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
             Platform.runLater(() -> {
-
                 move(key);
-//                    GameScene.this.maxCellNumbersToScore();
                 // score update is wrong , not the sum,
                 // but the sum of merge value
-
                 setScore();
                 fillNewNumberOrEnd(primaryStage, endGameScene, endGameRoot);
             });

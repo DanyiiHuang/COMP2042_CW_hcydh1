@@ -1,6 +1,5 @@
 package com.example.comp2042huangdanyi.Controls;
 
-
 import com.example.comp2042huangdanyi.Views.EndGame;
 import com.example.comp2042huangdanyi.Views.View;
 import com.example.comp2042huangdanyi.data.Game;
@@ -13,23 +12,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.Optional;
 
-
-// for all code handle inputs from user
-
+/** for all code handle inputs from user.
+ *
+ */
 public class Controller extends Stage{
 
-
     Stage primaryStage;
-
     View view;
     // single design
     private static Controller singleInstance = null;
     public static Boolean isCommon = null;
+
     private Controller()
     {
         view = View.getSingleInstance();
@@ -38,6 +37,7 @@ public class Controller extends Stage{
             Platform.exit();
         });
     }
+
     public static Controller getSingleInstance() {
         if (singleInstance == null)
             singleInstance = new Controller();
@@ -48,27 +48,20 @@ public class Controller extends Stage{
     {
         view.cb.getSelectionModel().selectedIndexProperty()
                 .addListener(new ChangeListener<Number>() {
-
                     @Override
                     public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                        // new:
-                        // Auto-generated method stub
-//			System.out.println("choice   " + "" + arg0.getValue());
-//			System.out.println("choice" + "" + arg1.intValue());
-//			System.out.println("choice" + "" + arg2.intValue());
                         if (arg0.getValue().equals(0))
                         {
-                            //no change: default
+                            View.setChoice(0);
+                            view.getColorschemeChoice().setFill(Color.rgb(168, 149, 135, 1.0));
                         }
                         else if (arg0.getValue().equals(1))
                         {
                             View.setChoice(1);
+                            view.getColorschemeChoice().setFill(Color.rgb(255, 158, 12, 1.0));
                         }
-
                     }
                 });
-
-
     }
 
     public void gameMove(Stage primaryStage)
@@ -77,10 +70,6 @@ public class Controller extends Stage{
             Platform.runLater(() -> {
 
                 view.game.move(key);
-//                GameScene.this.maxCellNumbersToScore();
-                // score update is wrong , not the sum,
-                // but the sum of merge value
-
                 view.game.setScore();
                 view.game.fillNewNumberOrEnd(primaryStage, view.getEndGameScene(), view.getEndGameRoot());
             });
@@ -94,30 +83,12 @@ public class Controller extends Stage{
             @Override
             public void handle(MouseEvent event) {
 
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                alert.setTitle("Ready Dialog");
-//                alert.setHeaderText("Start from this page");
-//                alert.setContentText("Are you sure?");
-//
-//                Optional<ButtonType> result = alert.showAndWait();
-//                if (result.get() == ButtonType.OK){
-//                	colorRoot.getChildren().clear();
-//                }
-//                else
-//                {
-//                	System.exit(0);
-//                }
-
-//				 game.game(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot);
-
                 if(View.ab.getSelectionModel().getSelectedItem() == null ){
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
-
                     alert.setTitle("Game mode");
-                    alert.setHeaderText("Please select game mode or Please selecat Challenge time");
+                    alert.setHeaderText("Please select game mode or Please select Challenge time");
                     alert.setContentText("Are you sure?");
-
 
                     Game.isChallengeEasy = null;// choose common : isEasy = null , TimeNum = null
                     //change challengeText to common mode
@@ -125,53 +96,20 @@ public class Controller extends Stage{
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.OK){
-
-                        //root.getChildren().clear();
-
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
                                 //renew main JavaFX code
                                 Game.score = 0;
-                                //EndGame.scoreText.setText("Score: ");
-                                /**
-                                 * view.game.game(view.getGameScene(), view.getGameRoot(), primaryStage, view.getEndGameScene(), view.getEndGameRoot());
-                                 *                             view.showScene(primaryStage, view.getGameScene());
-                                 */
-                                //Main.main(new String[]{"",""});
-
-
-                                SwingUtilities.invokeLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new JFXPanel(); // this will prepare JavaFX toolkit and environment
-                                        Platform.runLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                //----------------------------
-                                                //use no parameter method to execute start(new Stage()) to achieve loading
-                                                //reopen
-                                                try {
-                                                    //Game.isChallengeEasy = null;
-                                                    //Game.isEasy = null;
-                                                    //Game.TimeNum = null;
-
-                                                }catch(Exception  e) {
-
-                                                    e.printStackTrace();
-                                                }
-                                                //----------------------------
-                                            }
-                                        });
-                                    }
-                                });
-
                             }
                         });
                     }}else {
-
-
                     view.game.game(view.getGameScene(), view.getGameRoot(), primaryStage, view.getEndGameScene(), view.getEndGameRoot());
+                    if(View.choice == 0) {
+                        view.getGameScene().setFill((Color.rgb(168, 149, 135, 1.0)));
+                    }else{
+                        view.getGameScene().setFill((Color.rgb(255, 158, 12, 1.0)));
+                    }
                     view.showScene(primaryStage, view.getGameScene());
                 }
             }
@@ -186,7 +124,6 @@ public class Controller extends Stage{
         });
 
         Platform.runLater(new Runnable() {
-
             @Override
             public void run() {
                 EndGame.quit.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -195,21 +132,18 @@ public class Controller extends Stage{
                         System.exit(0);
                     }
                 });
-
                 View.challengeMode.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
 
                     @Override
                     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
                         if(newValue.equals("60s") ){
-
-                            //60s 困难模式
+                            //60s challenge mode - difficult
                             Game.TimeNum = 60;
                             Game.isEasy = 0;
                             Game.isChallengeEasy = true;
                         }else if(newValue.equals("180s") ){
-
-                            //180s,容易模式
+                            //180s challenge mode - easy
                             Game.TimeNum = 180;
                             Game.isEasy = 1;
                             Game.isChallengeEasy = false;
@@ -220,11 +154,6 @@ public class Controller extends Stage{
                 View.ab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
-
-                        //gain level of difficult
-                        //System.out.println(newValue);
-                        //set challenge mode 3min as easy，1min as difficult,common mode doesn't have countdown
                         if(newValue.equals("challenge")){
                             if(Game.isChallengeEasy != null && Game.isChallengeEasy == true){
                                 //state and choose change mode,choose 60s or 180s
@@ -272,30 +201,18 @@ public class Controller extends Stage{
             @Override
             public void handle(MouseEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-
                 alert.setTitle("Confirm Restart");
                 alert.setHeaderText("Restart");
                 alert.setContentText("Are you sure?");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
-
                     root.getChildren().clear();
-
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            //更新JavaFX的主线程的代码放在此处
+                            //update JavaFX main code
                             Game.score = 0;
-                            //EndGame.scoreText.setText("Score: ");
-                            /**
-                             * view.game.game(view.getGameScene(), view.getGameRoot(), primaryStage, view.getEndGameScene(), view.getEndGameRoot());
-                             *                             view.showScene(primaryStage, view.getGameScene());
-                             */
-                            //Main.main(new String[]{"",""});
-
-
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -311,13 +228,9 @@ public class Controller extends Stage{
                                                 root.getChildren().clear();
                                                 Game.isChallengeEasy = null;
                                                 Game.isEasy = null;
-                                                //Game.TimeNum = null;
                                                 Main main = new Main();
                                                 main.start(new Stage());
-                                                //Main.main(new String[]{""});
-
                                             }catch(Exception  e) {
-
                                                 e.printStackTrace();
                                             }
                                             //----------------------------
@@ -333,8 +246,6 @@ public class Controller extends Stage{
         });
 
     }
-
-
     private class JFXPanel {
     }
 }
