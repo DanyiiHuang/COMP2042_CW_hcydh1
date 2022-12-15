@@ -1,5 +1,6 @@
 # COMP2042_CW_hcydh1
 <h1 align="center"> Hi👋 Welcome to my 2048 game!
+  
 ---
 
 ## Student Information
