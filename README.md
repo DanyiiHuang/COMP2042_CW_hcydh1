@@ -21,7 +21,7 @@ Student ID: 20411372
 1.1 Game design layout
 - menu page has "Welcome to 2048 Games" Title
 - menu page has choice of "Color Scheme"
-- menu page has choice of "Game mode
+- menu page has choice of "Game Mode"
 
 **2. Game mode**
 
