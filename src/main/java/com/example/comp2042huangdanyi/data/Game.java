@@ -30,7 +30,12 @@ import java.util.Random;
 // ====================
 // duplciated GameScene
 
-public class Game {
+public class Game  {
+
+    public Game (){
+        // Add a window listener to the stage
+
+    }
     private static int HEIGHT = 700;
     private static int n = 4;
     private final static int distanceBetweenCells = 10;
@@ -43,11 +48,13 @@ public class Game {
     private Text scoreText;
     private Text scoreTime;
     private Text leaderText;
-    private Text challengeText;
+    public static Text challengeText = new Text();
+    public static Boolean isChallengeEasy = null;
+
     public static Integer highLeader = 0;
-    public static volatile Integer TimeNum = 0;
-    // TODO 1 是容易，0 是困难
-    public static Integer isEasy;
+    public static volatile Integer TimeNum = null;
+    // set 1 as easy, 0 as difficult
+    public static Integer isEasy = null;
 
 
     public Text getText() { return scoreText; }
@@ -123,7 +130,7 @@ public class Game {
         return -1;
     }
 
-    // return ����һ��
+    // return
     private int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
@@ -195,7 +202,7 @@ public class Game {
         }
     }
 
-    // no nocessary each one has a dest
+    // not necessary:  each one has a dest
     private void moveRight() {
         for (int i = 0; i < n; i++) {
             for (int j = n - 1; j >= 0; j--) {
@@ -354,6 +361,8 @@ public class Game {
     }
     public void fillNewNumberOrEnd(Stage primaryStage, Scene endGameScene, Group endGameRoot)
     {
+
+
         int haveEmptyCell;
         haveEmptyCell = Game.this.haveEmptyCell();
 
@@ -366,12 +375,14 @@ public class Game {
                 EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
                 Controller.getSingleInstance().gameOver(endGameRoot);
                 root.getChildren().clear();
+                if(Game.isChallengeEasy == null){
+                    //说明是普通模式，然后才进行设置排行榜
+                    //change HIGN
+                    if(highLeader < score){
+                        highLeader = score;
+                    }
 
-                //TODO 修改HIGN
-                if(highLeader < score){
-                    highLeader = score;
                 }
-
             }
         } else if(haveEmptyCell == 1 && moveFlag)
         {
@@ -404,97 +415,153 @@ public class Game {
         root.getChildren().add(scoreText);
         scoreText.relocate(750, 150);
         scoreText.setFont(Font.font(20));
-        //TODO old: 0
+        //old: 0
         scoreText.setText(score + "");
 
+        if(challengeText.getText().equals("common")){
+            //at time time is common mode，no timer。need to move the text upward and hide level of difficulty
 
-        Text time = new Text();
-        root.getChildren().add(time);
-        time.setText("TIME:");
-        time.setFont(Font.font(30));
-        time.relocate(750, 270);
-        scoreTime = new Text();
-        root.getChildren().add(scoreTime);
-        scoreTime.relocate(750, 320);
-        scoreTime.setFont(Font.font(20));
-        if(Game.isEasy == 1){
-            TimeNum = 180;
-            scoreTime.setText(TimeNum +"");
-        }else {
-            TimeNum = 60;
-            scoreTime.setText(TimeNum +"");
+            //set yexy of leaderboard
+            Text leader = new Text();
+            root.getChildren().add(leader);
+            leader.setText("HIGH:");
+            leader.setFont(Font.font(30));
+            leader.relocate(750, 270);
+            leaderText = new Text();
+            root.getChildren().add(leaderText);
+            leaderText.relocate(750,320);
+            leaderText.setFont(Font.font(20));
+            //st HIGH
+            leaderText.setText(Game.highLeader + "");
+
+
+            // set text of level of difficulty
+            Text challenge = new Text();
+            root.getChildren().add(challenge);
+            challenge.setText("MODE:");
+            challenge.setFont(Font.font(30));
+            challenge.relocate(750,400);
+            // challengeText = new Text();
+            root.getChildren().add(challengeText);
+            challengeText.relocate(750,450);
+            challengeText.setFont(Font.font(20));
+            //set HIGH
+            Boolean isChallengeEasy = Game.isChallengeEasy;
+
+
+        }else if(challengeText.getText().equals("challenge")){
+            //challenge mode
+            Text time = new Text();
+            root.getChildren().add(time);
+            time.setText("TIME:");
+            time.setFont(Font.font(30));
+            time.relocate(750, 270);
+            scoreTime = new Text();
+            root.getChildren().add(scoreTime);
+            scoreTime.relocate(750, 320);
+            scoreTime.setFont(Font.font(20));
+            scoreTime.setText( Game.TimeNum+ "");
+
+            /**
+             * if(Game.isEasy != null && Game.isEasy == 1){
+             *                 TimeNum = 180;
+             *                 scoreTime.setText(TimeNum +"");
+             *             }else if (Game.isEasy != null && Game.isEasy == 0){
+             *                 TimeNum = 60;
+             *                 scoreTime.setText(TimeNum +"");
+             *             }
+             */
+            /**
+             *             //set text of leaderboard
+             *             Text leader = new Text();
+             *             root.getChildren().add(leader);
+             *             leader.setText("HIGH:");
+             *             leader.setFont(Font.font(30));
+             *             leader.relocate(750,400);
+             *             leaderText = new Text();
+             *             root.getChildren().add(leaderText);
+             *             leaderText.relocate(750,450);
+             *             leaderText.setFont(Font.font(20));
+             *             //设置HIGH
+             *             leaderText.setText(highLeader + "");
+             */
+
+
+
+            //set text of difficulty
+            Text challenge = new Text();
+            root.getChildren().add(challenge);
+            challenge.setText("MODE:");
+            challenge.setFont(Font.font(30));
+            challenge.relocate(750,400);
+            //challengeText = new Text();
+            root.getChildren().add(challengeText);
+            challengeText.relocate(750,450);
+            challengeText.setFont(Font.font(20));
+            //set HIGH
+            Boolean isChallengeEasy = Game.isChallengeEasy;
+
         }
 
 
 
-        //TODO 设置排行榜的text
-        Text leader = new Text();
-        root.getChildren().add(leader);
-        leader.setText("HIGH:");
-        leader.setFont(Font.font(30));
-        leader.relocate(750,400);
-        leaderText = new Text();
-        root.getChildren().add(leaderText);
-        leaderText.relocate(750,450);
-        leaderText.setFont(Font.font(20));
-        //设置HIGH
-        leaderText.setText(highLeader + "");
 
 
-        //TODO 设置容易程度的text
-        Text challenge = new Text();
-        root.getChildren().add(challenge);
-        challenge.setText("MODE:");
-        challenge.setFont(Font.font(30));
-        challenge.relocate(750,500);
-        challengeText = new Text();
-        root.getChildren().add(challengeText);
-        challengeText.relocate(750,550);
-        challengeText.setFont(Font.font(20));
-        //设置HIGH
-        challengeText.setText((Game.isEasy==1) ? "easy": "hard");
 
         new Thread(()->{
 
+            /**
+             *              if(Game.isEasy != null && Game.isEasy == 1){
+             *                     Game.TimeNum = 180;
+             *                 }else if(Game.isEasy != null && Game.isEasy == 0){
+             *                     Game.TimeNum = 60;
+             *                 }
+             */
 
-            if(Game.isEasy == 1){
-                Game.TimeNum = 180;
-            }else {
-                Game.TimeNum = 60;
-            }
             synchronized (this){
                 while(true){
+                    if(Game.isChallengeEasy == null || Game.isEasy == null || Game.TimeNum == null){
+                        //now common mode, no timer,break directly
+                        //break;
 
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    scoreTime.setText(String.valueOf(Game.TimeNum--));
-                    if(Game.TimeNum == 0){
+                    }else {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            if(e != null){
+                                e.printStackTrace();
+                            }
                         }
-                        scoreTime.setText(String.valueOf(Game.TimeNum));
+                        if(Game.TimeNum != null && Game.TimeNum != null){
+                            if(scoreTime != null){
+                                scoreTime.setText(String.valueOf(Game.TimeNum--));
+                            }
+                        }
+                        if(Game.TimeNum != null && Game.TimeNum != null && Game.TimeNum == 0){
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            scoreTime.setText(String.valueOf(Game.TimeNum));
 
-                        break;
+                            break;
+                        }
                     }
                 }
             }
 
-            //TODO 清空TimeNum
+            //clear TimeNum
             //Game.TimeNum = 0;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    //更新JavaFX的主线程的代码放在此处
+                    //update JavaFX main code to here
                     primaryStage.setScene(endGameScene);
                     EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
                     Integer highLeader = Game.highLeader;
-                    //TODO 设置排行榜
-                    if(score > highLeader){
+                    //set leaderboard
+                    if(score > highLeader && Game.isChallengeEasy == null){
                         Game.highLeader = score;
                     }
 

@@ -1,6 +1,7 @@
 package com.example.comp2042huangdanyi.Views;
 
 import com.example.comp2042huangdanyi.data.Game;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -18,15 +19,14 @@ import javafx.stage.Stage;
 
 import java.util.Scanner;
 
-public class View {
+public class View extends Stage{
     static final int WIDTH = 900;
     static final int HEIGHT = 900;
-
+    public static Text challengeText = new Text();
 
     // add color scheme
     public static int choice = 0;
-    public static Color[] colors = {
-            Color.rgb(224, 226, 226, 0.5),
+    public static Color[] colors = {Color.rgb(224, 226, 226, 0.5),
             Color.rgb(232, 255, 100, 0.5),
             Color.rgb(232, 220, 50, 0.5),
             Color.rgb(232, 200, 44, 0.8),
@@ -41,8 +41,7 @@ public class View {
 
     };
 
-    static Color[] colors2 = {
-            Color.rgb(24, 226, 226, 0.5),
+    static Color[] colors2 = {Color.rgb(24, 226, 226, 0.5),
             Color.rgb(32, 255, 100, 0.5),
             Color.rgb(32, 220, 50, 0.5),
             Color.rgb(32, 200, 44, 0.8),
@@ -74,7 +73,9 @@ public class View {
     public Button exitButton;
     public ChoiceBox cb;
     public  static ChoiceBox  ab = new ChoiceBox(FXCollections.observableArrayList(
-            "easy", "hard"));
+            "challenge","common"));
+    public  static ChoiceBox challengeMode = new ChoiceBox(FXCollections.observableArrayList(
+            "","60s", "180s"));
     public Game game;
 
     static Color[] tmpColors;
@@ -92,21 +93,43 @@ public class View {
 
     public static void setColorByNumber(int number, Rectangle rectangle, int choice) {
         if (choice == 0) tmpColors = colors;
-        else
-            tmpColors = colors2;
+        else tmpColors = colors2;
         switch (number) {
-            case 0 -> rectangle.setFill(tmpColors[0]);
-            case 2 -> rectangle.setFill(tmpColors[1]);
-            case 4 -> rectangle.setFill(tmpColors[2]);
-            case 8 -> rectangle.setFill(tmpColors[3]);
-            case 16 -> rectangle.setFill(tmpColors[4]);
-            case 32 -> rectangle.setFill(tmpColors[5]);
-            case 64 -> rectangle.setFill(tmpColors[6]);
-            case 128 -> rectangle.setFill(tmpColors[7]);
-            case 256 -> rectangle.setFill(tmpColors[8]);
-            case 512 -> rectangle.setFill(tmpColors[9]);
-            case 1024 -> rectangle.setFill(tmpColors[10]);
-            case 2048 -> rectangle.setFill(tmpColors[11]);
+            case 0:
+                rectangle.setFill(tmpColors[0]);
+                break;
+            case 2:
+                rectangle.setFill(tmpColors[1]);
+                break;
+            case 4:
+                rectangle.setFill(tmpColors[2]);
+                break;
+            case 8:
+                rectangle.setFill(tmpColors[3]);
+                break;
+            case 16:
+                rectangle.setFill(tmpColors[4]);
+                break;
+            case 32:
+                rectangle.setFill(tmpColors[5]);
+                break;
+            case 64:
+                rectangle.setFill(tmpColors[6]);
+                break;
+            case 128:
+                rectangle.setFill(tmpColors[7]);
+                break;
+            case 256:
+                rectangle.setFill(tmpColors[8]);
+                break;
+            case 512:
+                rectangle.setFill(tmpColors[9]);
+                break;
+            case 1024:
+                rectangle.setFill(tmpColors[10]);
+                break;
+            case 2048:
+                rectangle.setFill(tmpColors[11]);
         }
 
     }
@@ -114,7 +137,10 @@ public class View {
 
 
     private View(){
-
+        setOnCloseRequest(e -> {
+            // Call the Platform.exit() method when the window is closed
+            Platform.exit();
+        });
     }
 
     public static View getSingleInstance() {
@@ -159,7 +185,7 @@ public class View {
         // menuRoot, accountRoot,
 
         Group menuRoot = new Group();
-        //TODO old : null new : 108 97 127
+        // old : null new : 108 97 127
         Scene menuScene = new Scene(menuRoot, WIDTH, HEIGHT,Color.rgb(108, 97, 127, 0.2));
         Group accountRoot = new Group();
         Scene accountScene = new Scene(accountRoot, WIDTH, HEIGHT, Color.rgb(150, 20, 100, 0.2));
@@ -167,15 +193,15 @@ public class View {
         Scene getAccountScene = new Scene(getAccountRoot, WIDTH, HEIGHT, Color.rgb(200, 20, 100, 0.2));
 
         endgameRoot = new Group();
-        //TODO 游戏结束面板背景 old 250 20 100  new: 108 97 127
+        //End Game Scene Background old 250 20 100  new: 108 97 127
         endGameScene = new Scene(endgameRoot, WIDTH, HEIGHT, Color.rgb(108, 97, 127, 0.2));
         Group rankRoot = new Group();
         Scene rankScene = new Scene(rankRoot, WIDTH, HEIGHT, Color.rgb(250, 50, 120, 0.3));
-        //TODO background
+        //background
         BackgroundFill background_fill = new BackgroundFill(Color.rgb(120, 100, 100), CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(background_fill);
 
-        //TODO old: 120, 120, 120  new: 108,97,127
+        //old: 120, 120, 120  new: 108,97,127
         Rectangle backgroundOfMenu = new Rectangle(240, 120, Color.rgb(120, 120, 120, 0.2));
         backgroundOfMenu.setX(WIDTH / 2 - 120);
         backgroundOfMenu.setY(180);
@@ -190,7 +216,7 @@ public class View {
         setGameRoot(gameRoot);
 
         // duplicated variable
-        //TODO old: 189 177 92  new: 252 224 203  newV2: 169 150 136 游戏面板背景
+        //Game Scene Background: old: 189 177 92  new: 252 224 203  newV2: 169 150 136
         gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(169, 150, 136));
 
 //        setGameScene(gameScene);
@@ -199,9 +225,9 @@ public class View {
         // select color scheme
 
         Group  colorRoot= new Group();
-        //TODO colorRoot Style  new: 108,97,127
+        //colorRoot Style  new: 108,97,127
         //colorRoot.setStyle("-fx-background-color: BEIGE;");
-        //TODO 设置主面板背景颜色
+        //set background color
         colorschemeChoice = new Scene(colorRoot, WIDTH, HEIGHT,Color.rgb(120, 120, 120, 0.2));
 
         Text titleText = new Text("Welcome to 2048 Games");
@@ -210,20 +236,31 @@ public class View {
         titleText.setFont(Font.font(50));
         colorRoot.getChildren().add(titleText);
 
-        Text scoreText = new Text("choose a color scheme :            Choosing the Game Difficulty :");
+        Text scoreText = new Text("choose a color scheme :            Choose the Game Mode :");
         scoreText.setFill(Color.BLACK);
-        scoreText.relocate(200,300);
+        scoreText.relocate(200,250);
         scoreText.setFont(Font.font(20));
         colorRoot.getChildren().add(scoreText);
         cb = new ChoiceBox(FXCollections.observableArrayList(
                 "First", "Second")
         );
-        cb.relocate(250,400);
+        cb.relocate(250,350);
         colorRoot.getChildren().add(cb);
 
-
-        ab.relocate(600,400);
+        ab.relocate(560,350);
         colorRoot.getChildren().add(ab);
+
+        challengeMode.relocate(440,525);
+        challengeMode.setVisible(true);
+        colorRoot.getChildren().add(challengeMode);
+
+        //Text challengeText = new Text("(Challenge Mode)Choose a challenge mode");
+        challengeText.setText("(Challenge Mode)Choose a challenge mode");
+        challengeText.setFill(Color.BLACK);
+        challengeText.setVisible(true);
+        challengeText.relocate(270,470);
+        challengeText.setFont(Font.font(20));
+        colorRoot.getChildren().add(challengeText);
 
 //        cb.getSelectionModel().selectedIndexProperty()
 //        .addListener(new ChangeListener<Number>() {
@@ -233,7 +270,7 @@ public class View {
 //
 //		@Override
 //		public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-//			// TODO Auto-generated method stub
+//			// Auto-generated method stub
 //			System.out.println("choice" + arg0 + "");
 //		}
 //        });
@@ -242,14 +279,14 @@ public class View {
         exitButton.setPrefSize(200,100);
         exitButton.setTextFill(Color.BLACK);
         colorRoot.getChildren().add(exitButton);
-        exitButton.relocate(370,700);
+        exitButton.relocate(370,730);
 
 
         readyButton = new Button("Start Game");
         readyButton.setPrefSize(200,100);
         readyButton.setTextFill(Color.BLACK);
         colorRoot.getChildren().add(readyButton);
-        readyButton.relocate(370,500);
+        readyButton.relocate(370,600);
 //        readyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 //            @Override
 //            public void handle(MouseEvent event) {

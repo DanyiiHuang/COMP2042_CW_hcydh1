@@ -2,6 +2,7 @@ module com.example.comp2042huangdanyi {
     requires javafx.controls;
     requires javafx.fxml;
     requires  javafx.base;
+    requires java.desktop;
 
 
     opens com.example.comp2042huangdanyi.Controls to javafx.controls;

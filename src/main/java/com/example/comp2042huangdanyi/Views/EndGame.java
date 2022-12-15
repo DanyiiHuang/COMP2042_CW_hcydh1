@@ -29,7 +29,7 @@ public class EndGame {
         text.relocate(230,250);
         text.setFont(Font.font(80));
         root.getChildren().add(text);
-        //TODO old score  new Game.score
+        //new:  old score  new Game.score
         int score1 = Game.score;
         scoreText.setText("Score:"+score);
         scoreText.setFill(Color.BLACK);
@@ -41,13 +41,13 @@ public class EndGame {
 
         }
         score = 0;
-        //TODO
+        //
         Text keepText = new Text(" Please keep trying!");
         keepText.setFill(Color.BLACK);
         keepText.relocate(300,467);
         keepText.setFont(Font.font(30));
         root.getChildren().add(keepText);
-        //TODO
+        //
         quitButton = new Button("Restart");
         quitButton.setPrefSize(200,50);
         quitButton.setTextFill(Color.BLACK);

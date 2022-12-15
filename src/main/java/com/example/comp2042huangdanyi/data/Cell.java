@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import static com.example.comp2042huangdanyi.Views.View.choice;
+
 // ecap of methods : change to private
 // Rectangle
 
@@ -31,8 +33,8 @@ public class Cell {
         rectangle.setHeight(scale);
         rectangle.setWidth(scale);
         this.root = root;
-        rectangle.setFill(View.colors[0]);
         this.textClass = TextMaker.getSingleInstance().madeText("0", x, y, root);
+        View.setColorByNumber(getNumber(), rectangle, choice); //*
         root.getChildren().add(rectangle);
     }
 
@@ -55,6 +57,7 @@ public class Cell {
 //        setColorByNumber(getNumber());
 //        cell.setColorByNumber(cell.getNumber());
         View.setColorByNumber(getNumber(), rectangle, View.choice);
+        cell.setColorByNumber(cell.getNumber()); //*
     }
 
     void adder(Cell cell) {
@@ -64,11 +67,12 @@ public class Cell {
 //        cell.setColorByNumber(cell.getNumber());
 //        setColorByNumber(getNumber());
         View.setColorByNumber(getNumber(), rectangle, View.choice);
+        cell.setColorByNumber(cell.getNumber()); //*
     }
 
     // push to view class
     void setColorByNumber(int number) {
-      View.setColorByNumber(number, rectangle, View.choice);
+        View.setColorByNumber(number, rectangle, View.choice);
 //        switch (number) {
 //            case 0:
 //                rectangle.setFill(Color.rgb(224, 226, 226, 0.5));
@@ -108,7 +112,7 @@ public class Cell {
 //
 //
 //        }
-   }
+    }
 
     double getX() {
         return rectangle.getX();
