@@ -14,10 +14,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.Random;
 
+/**???????????
+ * @author DanyiHuang-modified
+ */
 public class Game  {
 
+    /** Constructor for Game.
+     *
+     */
     public Game (){
-        // Add a window listener to the stage
     }
     private static int HEIGHT = 700;
     private static int n = 4;
@@ -37,18 +42,26 @@ public class Game  {
     public static volatile Integer TimeNum = null;
     public static Integer isEasy = null; // set 1 as easy, 0 as difficult
 
-    public Text getText() { return scoreText; }
     public int getScore() { return score; }
 
-    static void setN(int number) {
-        n = number;
-        LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
-    }
-
+    /** Getter for LENGTH.
+     * @return double LENGTH.
+     */
     static double getLENGTH() {
         return LENGTH;
     }
 
+    /** Setter for score.
+     *
+     */
+    public void setScore()
+    {
+        scoreText.setText(score + "");
+    }
+
+    /** Method to fill random number inside 2D Array cell randomly.
+     * @param turn int turn.
+     */
     private void randomFillNumber(int turn) {
         Cell[][] emptyCells = new Cell[n][n];
         int a = 0;
@@ -96,7 +109,10 @@ public class Game  {
         }
     }
 
-    // If there is any empty cell then return 1 else return 0.
+    /** If there is any empty cell then return 1 else return 0.
+     * @return if there's empty cell then 0 else 1.
+     * @author DanyiHuang-modified
+     */
     private int  haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -109,7 +125,12 @@ public class Game  {
         return -1;
     }
 
-    // return
+    /** Method to pass cell to desire direction entered by user.
+     * @param i represents row in Cell[][].
+     * @param j represents column in Cell[][].
+     * @param direct movement entered by user.
+     * @return coordinate of the cell in Cell[][] after movement.
+     */
     private int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
@@ -164,6 +185,9 @@ public class Game  {
         return -1;
     }
 
+    /** Method to control moving leftward in game.
+     *
+     */
     private void moveLeft() {
         for (int i = 0; i < n; i++) {
             // is the right direction to loop
@@ -181,7 +205,9 @@ public class Game  {
         }
     }
 
-    // not necessary:  each one has a dest
+    /** Method to control moving rightward in game.
+     *
+     */
     private void moveRight() {
         for (int i = 0; i < n; i++) {
             for (int j = n - 1; j >= 0; j--) {
@@ -197,7 +223,7 @@ public class Game  {
         }
     }
 
-    /**
+    /** Method to control moving upward in game.
      *
      */
     private void moveUp() {
@@ -216,7 +242,7 @@ public class Game  {
 
     }
 
-    /**
+    /** Method to control moving downward in game.
      *
      */
     private void moveDown() {
@@ -235,6 +261,13 @@ public class Game  {
 
     }
 
+    /** Method to check if the cell is valid to move horizontally.
+     * @param i represents row in Cell[][].
+     * @param j represents column in Cell[][].
+     * @param des destination of the cell after passing horizontally.
+     * @param sign indicates the movement horizontally.
+     * @return true if valid to move else false.
+     */
     private boolean isValidDesH(int i, int j, int des, int sign) {
         // not modified: prevent merge 2 times
         // merge first and second cell
@@ -248,6 +281,12 @@ public class Game  {
         return false;
     }
 
+    /** Method to allow moving horizontally in game if valid.
+     * @param i represents row in Cell[][].
+     * @param j represents column in Cell[][].
+     * @param des destination of the cell after passing horizontally.
+     * @param sign indicates the movement horizontally.
+     */
     private void moveHorizontally(int i, int j, int des, int sign) {
         // if a valid move,
         // add two numbers, and des is modified
@@ -266,7 +305,13 @@ public class Game  {
         }
     }
 
-    // check if valid dest
+    /** Method to check if the cell is valid to move vertically.
+     * @param i represents row in Cell[][].
+     * @param j represents column in Cell[][].
+     * @param des destination of the cell after passing vertically
+     * @param sign indicates the movement vertically
+     * @return true if valid to move else false.
+     */
     private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
@@ -276,7 +321,12 @@ public class Game  {
         return false;
     }
 
-    // how to move
+    /** Method allow moving vertically if valid.
+     * @param i represents row in Cell[][].
+     * @param j represents column in Cell[][].
+     * @param des destination of the cell after passing vertically
+     * @param sign indicates the movement vertically
+     */
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             // update scores
@@ -292,6 +342,11 @@ public class Game  {
         }
     }
 
+    /** Method to check if there is any same number nearly.
+     * @param i represents row in Cell[][].
+     * @param j represents column in Cell[][].
+     * @return true if there is same number in rows or column else false.
+     */
     private boolean haveSameNumberNearly(int i, int j) {
         if (i < n - 1 && j < n - 1) {
             if (cells[i + 1][j].getNumber() == cells[i][j].getNumber())
@@ -302,6 +357,9 @@ public class Game  {
         return false;
     }
 
+    /** Method to check if the cell inside Cell[][] is able to move.
+     * @return true if unable to move else false.
+     */
     private boolean canNotMove() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -313,6 +371,9 @@ public class Game  {
         return true;
     }
 
+    /** Method to allow user controls movement in game.
+     * @param key key of the movement.
+     */
     public void move(KeyEvent key)
     {
         if (key.getCode() == KeyCode.DOWN) {
@@ -325,10 +386,12 @@ public class Game  {
             moveRight();
         }
     }
-    public void setScore()
-    {
-        scoreText.setText(score + "");
-    }
+
+    /** Method to check if the game is still able to continue or end.
+     * @param primaryStage Stage primaryStage of the application.
+     * @param endGameScene Scene display the endGame view.
+     * @param endGameRoot Group to store component into endGame container.
+     */
     public void fillNewNumberOrEnd(Stage primaryStage, Scene endGameScene, Group endGameRoot)
     {
         int haveEmptyCell;
@@ -364,12 +427,12 @@ public class Game  {
         moveFlag = false;
     }
 
-    /**
-     * @param gameScene
-     * @param root
-     * @param primaryStage
-     * @param endGameScene
-     * @param endGameRoot
+    /** Method to display the content during in-game.
+     * @param gameScene Scene display the in-game view.
+     * @param root Root to store component into game container.
+     * @param primaryStage Stage primaryStage of the application.
+     * @param endGameScene Scene display the endGame view.
+     * @param endGameRoot Group to store component into endGame container.
      */
     // game main: duplicated variables
     public void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {

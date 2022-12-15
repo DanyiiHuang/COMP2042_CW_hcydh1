@@ -19,7 +19,7 @@ import javax.swing.*;
 import java.util.Optional;
 
 /** for all code handle inputs from user.
- *
+ * @author DanyiHuang-modified
  */
 public class Controller extends Stage{
 
@@ -29,11 +29,13 @@ public class Controller extends Stage{
     private static Controller singleInstance = null;
     public static Boolean isCommon = null;
 
+    /**Call the Platform.exit() method when the window is closed
+     * @author DanyiHuang
+     */
     private Controller()
     {
         view = View.getSingleInstance();
         setOnCloseRequest(e -> {
-            // Call the Platform.exit() method when the window is closed
             Platform.exit();
         });
     }
@@ -44,6 +46,9 @@ public class Controller extends Stage{
         return singleInstance;
     }
 
+    /** Method to get controller of color theme when selecting color scheme.
+     * @author DanyiHuang
+     */
     public void initColor()
     {
         view.cb.getSelectionModel().selectedIndexProperty()
@@ -64,6 +69,9 @@ public class Controller extends Stage{
                 });
     }
 
+    /** Method to get controller of user's movement in game.
+     * @param primaryStage Group primaryStage to display scene content.
+     */
     public void gameMove(Stage primaryStage)
     {
         view.getGameScene().addEventHandler(KeyEvent.KEY_PRESSED, key ->{
@@ -76,7 +84,16 @@ public class Controller extends Stage{
         });
     }
 
-    public void runGame(Stage primaryStage)
+    /** Method to get controller of startGame view.
+     * Choosing color scheme will change the color theme of the game.
+     * Choosing 'common' or 'challenge' game mode.
+     * If user chooses 'Challenge' mode, then user can choose
+     * different time range to challenge the game.
+     * Start the game after clicking the 'Start game' button
+     * or terminating the application if click 'Exit game' button.
+     * @param primaryStage Group primaryStage to display scene content.
+     */
+    public void startGame(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
         view.readyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -195,6 +212,9 @@ public class Controller extends Stage{
 
     }
 
+    /** Method to get controller of gameOver view.
+     * @param root Group root to store the component inside gameOver view.
+     */
     public void gameOver(Group root)
     {
         EndGame.quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -218,6 +238,9 @@ public class Controller extends Stage{
                                 public void run() {
                                     new JFXPanel(); // this will prepare JavaFX toolkit and environment
                                     Platform.runLater(new Runnable() {
+                                        /**
+                                         *
+                                         */
                                         @Override
                                         public void run() {
                                             //----------------------------
@@ -246,6 +269,10 @@ public class Controller extends Stage{
         });
 
     }
+
+    /** Class to display content inside application.
+     *
+     */
     private class JFXPanel {
     }
 }

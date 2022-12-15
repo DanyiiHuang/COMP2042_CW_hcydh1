@@ -7,20 +7,21 @@ import javafx.scene.text.Text;
 
 import static com.example.comp2042huangdanyi.Views.View.choice;
 
+/** Class to create cell and control the context of the cell.
+ * @author DanyiHuang-modified
+ */
 public class Cell {
     private Rectangle rectangle;
     private Group root;
     private Text textClass;
     private boolean modify = false;
 
-    void setModify(boolean modify) {
-        this.modify = modify;
-    }
-
-    boolean getModify() {
-        return modify;
-    }
-
+    /** Layout of cell board in game.
+     * @param x coordination of cell in x.
+     * @param y coordination of cell in y.
+     * @param scale Scale of the cell board.
+     * @param root Group root to store component.
+     */
     Cell(double x, double y, double scale, Group root) {
         rectangle = new Rectangle();
         rectangle.setX(x);
@@ -33,10 +34,9 @@ public class Cell {
         root.getChildren().add(rectangle);
     }
 
-    void setTextClass(Text textClass) {
-        this.textClass = textClass;
-    }
-
+    /** Method to change the cell's coordinate in 2D array after movement.
+     * @param cell cell board.
+     */
     void changeCell(Cell cell) {
         TextMaker.changeTwoText(textClass, cell.getTextClass());
         root.getChildren().remove(cell.getTextClass());
@@ -55,74 +55,71 @@ public class Cell {
         cell.setColorByNumber(cell.getNumber()); //*
     }
 
+    /** Method for cell's number sum together after movement.
+     * @param cell cell board.
+     */
     void adder(Cell cell) {
         cell.getTextClass().setText((cell.getNumber() + this.getNumber()) + "");
         textClass.setText("0");
         root.getChildren().remove(textClass);
-//        cell.setColorByNumber(cell.getNumber());
-//        setColorByNumber(getNumber());
         View.setColorByNumber(getNumber(), rectangle, View.choice);
         cell.setColorByNumber(cell.getNumber()); //*
     }
 
-    // push to view class
+    /** Method to change color based on cell's number.
+     * @param number number text in cell.
+     */
     void setColorByNumber(int number) {
         View.setColorByNumber(number, rectangle, View.choice);
-//        switch (number) {
-//            case 0:
-//                rectangle.setFill(Color.rgb(224, 226, 226, 0.5));
-//                break;
-//            case 2:
-//                rectangle.setFill(Color.rgb(232, 255, 100, 0.5));
-//                break;
-//            case 4:
-//                rectangle.setFill(Color.rgb(232, 220, 50, 0.5));
-//                break;
-//            case 8:
-//                rectangle.setFill(Color.rgb(232, 200, 44, 0.8));
-//                break;
-//            case 16:
-//                rectangle.setFill(Color.rgb(232, 170, 44, 0.8));
-//                break;
-//            case 32:
-//                rectangle.setFill(Color.rgb(180, 120, 44, 0.7));
-//                break;
-//            case 64:
-//                rectangle.setFill(Color.rgb(180, 100, 44, 0.7));
-//                break;
-//            case 128:
-//                rectangle.setFill(Color.rgb(180, 80, 44, 0.7));
-//                break;
-//            case 256:
-//                rectangle.setFill(Color.rgb(180, 60, 44, 0.8));
-//                break;
-//            case 512:
-//                rectangle.setFill(Color.rgb(180, 30, 44, 0.8));
-//                break;
-//            case 1024:
-//                rectangle.setFill(Color.rgb(250, 0, 44, 0.8));
-//                break;
-//            case 2048:
-//                rectangle.setFill(Color.rgb(250,0,0,1));
-//
-//
-//        }
     }
 
+    /** Getter for x.
+     * @return double x.
+     */
     double getX() {
         return rectangle.getX();
     }
 
+    /** Getter for y.
+     * @return double y.
+     */
     double getY() {
         return rectangle.getY();
     }
 
+    /** Getter for number.
+     * @return int number inside textClass.
+     */
     int getNumber() {
         return Integer.parseInt(textClass.getText());
     }
 
+    /** Getter for textClass.
+     * @return text TextClass.
+     */
     private Text getTextClass() {
         return textClass;
+    }
+
+    /** Setter for modify
+     * @param modify boolean modify.
+     */
+    void setModify(boolean modify) {
+        this.modify = modify;
+    }
+
+    /** Getter for modify.
+     * @return boolean modify.
+     */
+    boolean getModify() {
+        return modify;
+    }
+
+    /** Setter for textClass.
+     * @param textClass text textClass.
+     */
+    void setTextClass(Text textClass) {
+        this.textClass = textClass;
     }
 
 }

@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 
 import java.util.Scanner;
 
+/** Class for View to display the design of the game.
+ * @Author DanyiHuang-modified
+ */
 public class View extends Stage{
     static final int WIDTH = 900;
     static final int HEIGHT = 900;
@@ -70,6 +73,9 @@ public class View extends Stage{
     public Game game;
     static Color[] tmpColors;
 
+    /**
+     * @return
+     */
     public Scene getDiffRootChoice() {
         return diffRootChoice;
     }
@@ -143,11 +149,6 @@ public class View extends Stage{
 
     public void init(Stage primaryStage)
     {
-        // we have group of:
-        // menuRoot, accountRoot,
-        Group menuRoot = new Group();
-        // old : null new : 108 97 127
-        Scene menuScene = new Scene(menuRoot, WIDTH, HEIGHT,Color.rgb(108, 97, 127, 0.2));
         Group accountRoot = new Group();
         Scene accountScene = new Scene(accountRoot, WIDTH, HEIGHT, Color.rgb(150, 20, 100, 0.2));
         Group getAccountRoot = new Group();
@@ -159,21 +160,14 @@ public class View extends Stage{
         Group rankRoot = new Group();
         Scene rankScene = new Scene(rankRoot, WIDTH, HEIGHT, Color.rgb(250, 50, 120, 0.3));
 
-        //old: 120, 120, 120  new: 108,97,127
-        Rectangle backgroundOfMenu = new Rectangle(240, 120, Color.rgb(120, 120, 120, 0.2));
-        backgroundOfMenu.setX(WIDTH / 2 - 120);
-        backgroundOfMenu.setY(180);
-        menuRoot.getChildren().add(backgroundOfMenu);
-
         Rectangle backgroundOfMenuForPlay = new Rectangle(240, 140, Color.rgb( 120, 120, 120,0.2));
-        backgroundOfMenuForPlay.setX(WIDTH / 2 - 120);
+        backgroundOfMenuForPlay.setX(WIDTH / 2.0 - 120);
         backgroundOfMenuForPlay.setY(180);
         accountRoot.getChildren().add(backgroundOfMenuForPlay);
 
         gameRoot = new Group();
         setGameRoot(gameRoot);
 
-        // duplicated variable
         //Game Scene Background: old: 189 177 92  new: 252 224 203  newV2: 169 150 136
         gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(169, 150, 136));
         game = new Game();
