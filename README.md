@@ -1,4 +1,4 @@
-# COMP2042_CW_hcydh1
+# COMP2042_CW_hcydh1(Main Branch, please go master branch)
 <h1 align="center"> Hi👋 Welcome to my 2048 game!</h1>
 <h3 aligh="center"> All Contents are in the "Master Branch"!!
 
