@@ -17,11 +17,12 @@ Student ID: 20411372
 
 ## List of features that work properly
 **1. Game Scene**
-
-1.1 Game design layout
 - menu page has "Welcome to 2048 Games" Title
-- menu page has choice of "Color Scheme"
-- menu page has choice of "Game Mode"
+- menu page has choice of "Color Scheme", can choose one of the two color themes.
+- menu page has choice of "Game Mode, can choose "common mode" or "challenge mode".
+- menu page has choice of "Challenge Mode", can choose different countdown timer.
+- menu page has "Start Game" button, after select all choices above can start game.
+- menu page has "Exit Game" button, the game end and terminate.
 
 **2. Game mode**
 
