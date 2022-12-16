@@ -50,9 +50,11 @@ Student ID: 20411372
 - Multi-Account player mode
 - Challenge Mode doesn't have leaderboard
 - Challenge Mode doesn't refresh the highest score since it does not save highest score.
+- Cannot create multi-account
 
 ## Reason of not working features
-
+- No multi-account because time limited
+- When reach 1024 the word will exceed cell frame(haven't found out where is this bug)
 
 ## List of new Java Class added
 - Controller.java
