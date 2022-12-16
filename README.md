@@ -23,7 +23,7 @@ Java version: 17.0.2
 5. Run Main.java on Java version 17.0.
 
 ## Javadoc documentation location
-[Javadoc](hungry-brown.103-233-0-73.plesk.page) will be stored in COMP2042DanyiHuang\Javadoc
+[Javadoc](https://hungry-brown.103-233-0-73.plesk.page) will be stored in COMP2042DanyiHuang\Javadoc
 
 ## List of features that work properly
 **1. Game Scene**
