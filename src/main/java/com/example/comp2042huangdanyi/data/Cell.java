@@ -58,7 +58,7 @@ public class Cell {
     /** Method for cell's number sum together after movement.
      * @param cell cell board.
      */
-    void adder(Cell cell) {
+    public void adder(Cell cell) {
         cell.getTextClass().setText((cell.getNumber() + this.getNumber()) + "");
         textClass.setText("0");
         root.getChildren().remove(textClass);

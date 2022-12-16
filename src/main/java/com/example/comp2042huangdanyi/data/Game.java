@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.Random;
 
-/**???????????
+/** Game Class.
  * @author DanyiHuang-modified
  */
 public class Game  {
@@ -29,7 +29,7 @@ public class Game  {
     private final static int distanceBetweenCells = 10;
     private static double LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
     private TextMaker textMaker = TextMaker.getSingleInstance();
-    private Cell[][] cells = new Cell[n][n];
+    private static Cell[][] cells = new Cell[n][n];
     private Group root;
     public static int score = 0;  // score should be int
     private boolean moveFlag = false;
@@ -51,6 +51,24 @@ public class Game  {
         return LENGTH;
     }
 
+    /** Getter for distanceBetweenCells.
+     * @return distanceBetweenCells.
+     */
+    static int getDistanceBetweenCells(){
+        return distanceBetweenCells;
+    }
+
+    static Cell[][] getCells(){
+        return cells;
+    }
+
+    /** Getter for n.
+     * @return int n.
+     */
+    static int getN(){
+        return n;
+    }
+
     /** Setter for score.
      *
      */
@@ -62,7 +80,7 @@ public class Game  {
     /** Method to fill random number inside 2D Array cell randomly.
      * @param turn int turn.
      */
-    private void randomFillNumber(int turn) {
+    public void randomFillNumber(int turn) {
         Cell[][] emptyCells = new Cell[n][n];
         int a = 0;
         int b = 0;
@@ -113,7 +131,7 @@ public class Game  {
      * @return if there's empty cell then 0 else 1.
      * @author DanyiHuang-modified
      */
-    private int  haveEmptyCell() {
+    public int  haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if(cells[i][j].getNumber() == 2048)
@@ -131,7 +149,7 @@ public class Game  {
      * @param direct movement entered by user.
      * @return coordinate of the cell in Cell[][] after movement.
      */
-    private int passDestination(int i, int j, char direct) {
+    public int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
             // search the "not 0 cell"
@@ -188,7 +206,7 @@ public class Game  {
     /** Method to control moving leftward in game.
      *
      */
-    private void moveLeft() {
+    public void moveLeft() {
         for (int i = 0; i < n; i++) {
             // is the right direction to loop
             for (int j = 1; j < n; j++) {
@@ -208,7 +226,7 @@ public class Game  {
     /** Method to control moving rightward in game.
      *
      */
-    private void moveRight() {
+    public void moveRight() {
         for (int i = 0; i < n; i++) {
             for (int j = n - 1; j >= 0; j--) {
                 if (cells[i][j].getNumber() != 0)
@@ -226,7 +244,7 @@ public class Game  {
     /** Method to control moving upward in game.
      *
      */
-    private void moveUp() {
+    public void moveUp() {
         for (int j = 0; j < n; j++) {
             for (int i = 1; i < n; i++) {
                 if (cells[i][j].getNumber() != 0)
@@ -245,7 +263,7 @@ public class Game  {
     /** Method to control moving downward in game.
      *
      */
-    private void moveDown() {
+    public void moveDown() {
         for (int j = 0; j < n; j++) {
             for (int i = n - 1; i >= 0; i--) {
                 if (cells[i][j].getNumber() != 0)
@@ -268,7 +286,7 @@ public class Game  {
      * @param sign indicates the movement horizontally.
      * @return true if valid to move else false.
      */
-    private boolean isValidDesH(int i, int j, int des, int sign) {
+    public boolean isValidDesH(int i, int j, int des, int sign) {
         // not modified: prevent merge 2 times
         // merge first and second cell
         // first cell should  equal to second , and they both be non zero
@@ -287,7 +305,7 @@ public class Game  {
      * @param des destination of the cell after passing horizontally.
      * @param sign indicates the movement horizontally.
      */
-    private void moveHorizontally(int i, int j, int des, int sign) {
+    public void moveHorizontally(int i, int j, int des, int sign) {
         // if a valid move,
         // add two numbers, and des is modified
         if (isValidDesH(i, j, des, sign)) {
@@ -312,7 +330,7 @@ public class Game  {
      * @param sign indicates the movement vertically
      * @return true if valid to move else false.
      */
-    private boolean isValidDesV(int i, int j, int des, int sign) {
+    public boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
                     && cells[des + sign][j].getNumber() != 0) {
@@ -327,7 +345,7 @@ public class Game  {
      * @param des destination of the cell after passing vertically
      * @param sign indicates the movement vertically
      */
-    private void moveVertically(int i, int j, int des, int sign) {
+    public void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             // update scores
             score += cells[i][j].getNumber();
@@ -347,7 +365,7 @@ public class Game  {
      * @param j represents column in Cell[][].
      * @return true if there is same number in rows or column else false.
      */
-    private boolean haveSameNumberNearly(int i, int j) {
+    public boolean haveSameNumberNearly(int i, int j) {
         if (i < n - 1 && j < n - 1) {
             if (cells[i + 1][j].getNumber() == cells[i][j].getNumber())
                 return true;
@@ -360,7 +378,7 @@ public class Game  {
     /** Method to check if the cell inside Cell[][] is able to move.
      * @return true if unable to move else false.
      */
-    private boolean canNotMove() {
+    public boolean canNotMove() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (haveSameNumberNearly(i, j)) {

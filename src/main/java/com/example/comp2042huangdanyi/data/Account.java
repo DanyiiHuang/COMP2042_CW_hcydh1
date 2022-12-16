@@ -3,7 +3,7 @@ package com.example.comp2042huangdanyi.data;
 import java.util.ArrayList;
 
 
-/**Class to allow user enter name,score comparing score between accounts and store into ArrayList.
+/** Class to allow user enter name,score comparing score between accounts and store into ArrayList.
  * @author DanyiHuang-modified
  */
 public class Account implements Comparable<Account> {
@@ -48,7 +48,6 @@ public class Account implements Comparable<Account> {
             }
         }
         return null;
-
     }
 
     /** Method to create a new account for user.

@@ -30,7 +30,7 @@ public class Controller extends Stage{
     public static Boolean isCommon = null;
 
     /**Call the Platform.exit() method when the window is closed
-     * @author DanyiHuang
+     *
      */
     private Controller()
     {
@@ -47,7 +47,7 @@ public class Controller extends Stage{
     }
 
     /** Method to get controller of color theme when selecting color scheme.
-     * @author DanyiHuang
+     *
      */
     public void initColor()
     {

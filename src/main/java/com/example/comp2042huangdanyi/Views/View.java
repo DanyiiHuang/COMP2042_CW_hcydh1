@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.util.Scanner;
 
 /** Class for View to display the design of the game.
- * @Author DanyiHuang-modified
+ * @author DanyiHuang-modified
  */
 public class View extends Stage{
     static final int WIDTH = 900;
@@ -73,23 +73,37 @@ public class View extends Stage{
     public Game game;
     static Color[] tmpColors;
 
-    /**
-     * @return
+    /** Getter method for diffRootChoice.
+     * @return diffRootChoice.
      */
     public Scene getDiffRootChoice() {
         return diffRootChoice;
     }
 
+    /** Getter method for colorschemeChoice.
+     * @return colorschemeChoice.
+     */
     public Scene getColorschemeChoice(){
         return colorschemeChoice;
     }
 
+    /** Setter method for diffRootChoice.
+     * @param diffRootChoice Scene diffRootChoice.
+     */
     public void setDiffRootChoice(Scene diffRootChoice) {
         this.diffRootChoice = diffRootChoice;
     }
 
+    /** Setter method for choice.
+     * @param c int choice.
+     */
     public static void setChoice(int c) { choice = c; }
 
+    /** Method to set color based on Cell's number.
+     * @param number int number inside cell.
+     * @param rectangle filling color inside cell.
+     * @param choice int choice to choose color theme.
+     */
     public static void setColorByNumber(int number, Rectangle rectangle, int choice) {
         if (choice == 0) tmpColors = colors;
         else tmpColors = colors2;
@@ -109,7 +123,7 @@ public class View extends Stage{
         }
     }
 
-    /**
+    /** Method to handle status of the application.
      *
      */
     private View(){
@@ -119,34 +133,61 @@ public class View extends Stage{
         });
     }
 
+    /** Getter method for singleInstance in class View.
+     * @return object View.
+     */
     public static View getSingleInstance() {
         if (singleInstance == null)
             singleInstance = new View();
         return singleInstance;
     }
 
-    public void setGameScene(Scene gameScene) {
-        this.gameScene = gameScene;
-    }
+    /** Getter method for gameScene.
+     * @return Scene gameScene.
+     */
     public Scene getGameScene() {
         return gameScene;
     }
+
+    /** Getter method for colorschemeChoice.
+     * @return Scene colorschemeChoice.
+     */
     public Scene getColorScene() {
         return colorschemeChoice;
     }
+
+    /** Getter method for endGameScene.
+     * @return Scene endGameScene.
+     */
     public Scene getEndGameScene() {
         return endGameScene;
     }
+
+    /** Getter method for gameRoot.
+     * @return Group gameRoot.
+     */
     public Group getGameRoot() {
         return gameRoot;
     }
+
+    /** Getter method for endgameRoot.
+     * @return Group endgameRoot.
+     */
     public Group getEndGameRoot() {
         return endgameRoot;
     }
+
+    /** Setter method for gameRoot.
+     * @param gameRoot Group gameRoot.
+     *
+     */
     public void setGameRoot(Group gameRoot) {
         this.gameRoot = gameRoot;
     }
 
+    /** Method to create view of startScene.
+     * @param primaryStage Stage primaryStage to allow Scene to display content.
+     */
     public void init(Stage primaryStage)
     {
         Group accountRoot = new Group();
@@ -221,6 +262,10 @@ public class View extends Stage{
         readyButton.relocate(370,600);
     }
 
+    /** Method to set scene, display scene inside primaryStage.
+     * @param primaryStage Stage primaryStage.
+     * @param ColorScene Scene colorScene.
+     */
     public void showScene(Stage primaryStage, Scene ColorScene)
     {
         primaryStage.setScene(ColorScene);

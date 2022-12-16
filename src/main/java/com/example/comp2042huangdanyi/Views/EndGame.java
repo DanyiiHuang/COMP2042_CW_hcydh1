@@ -10,20 +10,37 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+/** Class for EndGame to display view in EndGame.
+ * @author DanyiHuang-modified
+ */
 public class EndGame {
-    private static EndGame singleInstance = null;
+    private static EndGame  singleInstance = null;
     public static Button quitButton;
     public static Button quit = new Button("Exit Game");
     public static Text scoreText = new Text();;
+
+    /** Constructor for class EndGame.
+     *
+     */
     private EndGame(){
 
     }
+
+    /** Method to create object for EndGame.
+     * @return object EndGame.
+     */
     public static EndGame getInstance(){
         if(singleInstance == null)
             singleInstance= new EndGame();
         return singleInstance;
     }
 
+    /** Method to display the content of endGame.
+     * @param endGameScene Scene display the endGame view.
+     * @param root Group root to store components
+     * @param primaryStage Stage primaryStage of the application.
+     * @param score Scoring of game.
+     */
     public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
         Text text = new Text("GAME OVER");
         text.relocate(230,250);
