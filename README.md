@@ -9,6 +9,8 @@ Student Name: Huang Danyi
 
 Student ID: 20411372
 
+Java version: 17.0.2
+
 ## How to Compile the code to produce the application
 1. Download Coursework Description and ZIP file from Moodle.
 
@@ -21,7 +23,7 @@ Student ID: 20411372
 5. Run Main.java on Java version 17.0.
 
 ## Javadoc documentation location
-
+[Javadoc](hungry-brown.103-233-0-73.plesk.page) will be stored in COMP2042DanyiHuang\Javadoc
 
 ## List of features that work properly
 **1. Game Scene**
@@ -36,7 +38,7 @@ Student ID: 20411372
 
 2.1 Common mode
 - Shows Scoring of the game
-- Shows Highest Score
+- Shows The Highest Score
 - Refresh the highest score in the next round of game until new highest score is achieved
 - Shows current chosen mode
 

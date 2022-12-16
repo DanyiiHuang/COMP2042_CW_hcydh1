@@ -6,7 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-/** Class to execute Java program。
+/** Class to execute Java program.
  * @author DanyiHuang-modified
  */
 public class Main extends Application {

@@ -184,14 +184,14 @@ public class Controller extends Stage{
                             // change challengeText as challenge common mode
                             Game.challengeText.setText("challenge");
 
-                            //new: add challenge button。
+                            //new: add challenge button.
                             View.challengeText.setText("(Challenge Mode)Choose a challenge mode");
                             View.challengeText.setVisible(true);
                             View.challengeMode.relocate(440,525);
                             View.challengeMode.setVisible(true);
 
                         }else if(Game.isChallengeEasy == null || newValue.equals("common")){
-                            //new: add challenge button display。
+                            //new: add challenge button display.
                             View.challengeText.setText("");
                             View.challengeMode.relocate(440,525);
                             View.challengeMode.setVisible(false);
